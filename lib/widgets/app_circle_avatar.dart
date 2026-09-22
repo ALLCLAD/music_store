@@ -9,7 +9,7 @@ class AppCircleAvatar  extends StatelessWidget {
   Widget build(BuildContext context) {
     return const CircleAvatar(
       radius: 60,
-      backgroundImage: AssetImage('assets/images/music_store.png'),
+      backgroundImage: AssetImage('assets/images/e_instru.png'),
     );
   }
 }

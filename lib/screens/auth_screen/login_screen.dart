@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:e_instru/widgets/app_circle_avatar.dart';
 import 'package:e_instru/widgets/auth_form/email_field.dart';
 import 'package:e_instru/widgets/auth_form/password_field.dart';
+import 'package:e_instru/screens/auth_screen/subscription_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,8 +29,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: <Widget>[
                         // wiget personnalisé du logo de l'app sous forme circulaire
                         const AppCircleAvatar(),
-                        
-                        const Text('Bienvenue chez Music Store'),
+
+                        const Text.rich(
+
+                          TextSpan(
+                            text:'Bienvenue chez',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 15, 59, 74),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold
+                            ),
+
+                            children : <TextSpan>[
+                              TextSpan(
+                                  text: ' Music Store',
+                                  style: TextStyle(
+                                      color: Colors.orange,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold
+                                  )
+                              )
+                            ],
+                          ),
+
+                        ),
+
 
                         // wiget personnalisé du champ email
                         const EmailField(),
@@ -45,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {},
 
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
+                                backgroundColor: Color.fromARGB(255, 15, 59, 74),
                                 foregroundColor: Colors.white,
                               ),
 
@@ -53,17 +77,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
 
                         ),
-                        
 
-                        
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const SubscriptionScreen()
+                                  )
+                              );
+                            },
 
                             style: TextButton.styleFrom(
-                                foregroundColor: Colors.blue
+                                foregroundColor: Color.fromARGB(255, 15, 59, 74)
                             ),
 
-                            child: const Text("Je n'ai pas de compte")
+                            child: const Text("Je n'ai pas de compte ?")
                         )
                       ],
                     )
