@@ -1,3 +1,4 @@
+//Widget pour le champ nom pour les formulaires d'inscription et de connexion
 import 'package:flutter/material.dart';
 
 class NameField extends StatelessWidget {

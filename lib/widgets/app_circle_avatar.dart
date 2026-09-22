@@ -1,4 +1,6 @@
+// Widget pour l'image personalisé de l'application sous forme de cercle
 import 'package:flutter/material.dart';
+
 
 class AppCircleAvatar  extends StatelessWidget {
   const AppCircleAvatar ({super.key});
@@ -6,7 +8,8 @@ class AppCircleAvatar  extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CircleAvatar(
-    backgroundImage: AssetImage('assets/images/music_store.png'),
+      radius: 60,
+      backgroundImage: AssetImage('assets/images/music_store.png'),
     );
   }
 }

@@ -1,4 +1,4 @@
-
+// Widget pour le champ email pour les formulaires d'inscription et de connexion
 import 'package:flutter/material.dart';
 
 class EmailField extends StatelessWidget {
