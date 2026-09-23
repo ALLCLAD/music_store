@@ -1,7 +1,9 @@
 import 'package:e_instru/screens/auth_screen/login_screen.dart';
 import 'package:e_instru/screens/auth_screen/subscription_screen.dart';
+import 'package:e_instru/screens/panier_screen.dart';
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
+import 'widgets/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,10 +18,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
 
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: .fromSeed(seedColor: C4),
 
       ),
-      home: const LoginScreen(),
+      home: const PanierPage(),
     );
   }
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:e_instru/widgets/app_circle_avatar.dart';
 import 'package:e_instru/widgets/auth_form/email_field.dart';
 import 'package:e_instru/widgets/auth_form/password_field.dart';
+import 'package:e_instru/widgets/auth_form/welcome.dart';
 import 'package:e_instru/screens/auth_screen/subscription_screen.dart';
+import 'package:e_instru/widgets/colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,38 +29,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       spacing: 50,
                       
                       children: <Widget>[
-                        // wiget personnalisé du logo de l'app sous forme circulaire
+                        // widget personnalisé du logo de l'app sous forme circulaire
                         const AppCircleAvatar(),
 
-                        const Text.rich(
+                        // widget personnaisé du texte de bienvenue
+                        const Welcome(),
 
-                          TextSpan(
-                            text:'Bienvenue chez',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 15, 59, 74),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold
-                            ),
-
-                            children : <TextSpan>[
-                              TextSpan(
-                                  text: ' Music Store',
-                                  style: TextStyle(
-                                      color: Colors.orange,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold
-                                  )
-                              )
-                            ],
-                          ),
-
-                        ),
-
-
-                        // wiget personnalisé du champ email
+                        // widget personnalisé du champ email
                         const EmailField(),
 
-                        // wiget personnalisé du champ mot de passe
+                        // widget personnalisé du champ mot de passe
                         const PasswordField(),
 
                         // side box pour contenir le boutton de connexion afin de lui donner une taille fixe et qu'il s'étende sur toute la largeur de l'écran
@@ -69,8 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {},
 
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color.fromARGB(255, 15, 59, 74),
-                                foregroundColor: Colors.white,
+                                backgroundColor: C2,
+                                foregroundColor: C3,
                               ),
 
                               child: const Text('Connexion')
@@ -89,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
 
                             style: TextButton.styleFrom(
-                                foregroundColor: Color.fromARGB(255, 15, 59, 74)
+                                foregroundColor: C2
                             ),
 
                             child: const Text("Je n'ai pas de compte ?")

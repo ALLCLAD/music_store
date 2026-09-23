@@ -3,7 +3,9 @@ import 'package:e_instru/widgets/app_circle_avatar.dart';
 import 'package:e_instru/widgets/auth_form/email_field.dart';
 import 'package:e_instru/widgets/auth_form/password_field.dart';
 import 'package:e_instru/widgets/auth_form/name_field.dart';
+import 'package:e_instru/widgets/auth_form/welcome.dart';
 import 'package:e_instru/screens/auth_screen/login_screen.dart';
+import 'package:e_instru/widgets/colors.dart';
 
 class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({super.key});
@@ -31,29 +33,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                 // widget personnalisé du logo de l'app sous forme circulaire
                                 const AppCircleAvatar(),
 
-                                const Text.rich(
-
-                                    TextSpan(
-                                        text:'Bienvenue chez',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(255, 15, 59, 74),
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold
-                                        ),
-
-                                        children : <TextSpan>[
-                                          TextSpan(
-                                            text: ' Music Store',
-                                            style: TextStyle(
-                                              color: Colors.orange,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold
-                                            )
-                                          )
-                                        ],
-                                    ),
-
-                                ),
+                                // widget personnaisé du texte de bienvenue
+                                const Welcome(),
 
                                 // widget personnalisé du champ nom
                                 const NameField(),
@@ -72,8 +53,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                       onPressed: () {},
 
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color.fromARGB(255, 15, 59, 74),
-                                        foregroundColor: Colors.white,
+                                        backgroundColor: C2,
+                                        foregroundColor: C3,
                                       ),
 
                                       child: const Text("S'inscrire")
@@ -92,7 +73,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                     },
 
                                     style: TextButton.styleFrom(
-                                        foregroundColor: Color.fromARGB(255, 15, 59, 74)
+                                        foregroundColor: C2,
                                     ),
 
                                     child: const Text("J'ai déjà un compte ?")
