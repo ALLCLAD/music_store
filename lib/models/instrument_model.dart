@@ -3,13 +3,13 @@ class Instrument {
   final String nom;
   final String imageUrl;
   final double prix;
-  final bool estFavoris;
+  bool estFavoris;
 
-  const Instrument({
+  Instrument({
     required this.id,
     required this.nom,
     required this.imageUrl,
     required this.prix,
-    this.estFavoris =false,
+    this.estFavoris = false,
   });
 }

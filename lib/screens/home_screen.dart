@@ -6,9 +6,14 @@ import '../data/Instrument_list.dart';
 import '../widgets/instrument_card.dart';
 import '../widgets/bottom_app_bar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +23,7 @@ class HomePage extends StatelessWidget {
 
       // le corps de l'écran
       body: SafeArea(
-          child: Padding(
+        child: Padding(
 
             padding: EdgeInsets.all(8),
 
@@ -34,11 +39,16 @@ class HomePage extends StatelessWidget {
 
                 // liste des instruments
                 Expanded(
-                  child: ListView.separated(
+                  child: GridView.builder(
 
                     itemCount: mesInstruments.length,
 
-                    separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 0.72,
+                    ),
 
                     itemBuilder: (context, index) {
                       final instrument = mesInstruments[index];
@@ -53,15 +63,15 @@ class HomePage extends StatelessWidget {
 
             )
 
-          ),
+        ),
 
 
 
       ),
 
       floatingActionButton: SizedBox(
-          width: 110,
-          height: 35,
+          width: 120,
+          height: 42,
           child:FloatingActionButton.extended(
             backgroundColor: C2,
             onPressed: () {},
@@ -84,4 +94,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-

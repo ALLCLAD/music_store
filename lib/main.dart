@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: .fromSeed(seedColor: C4),
 
       ),
-      home: const PanierPage(),
+      home: const HomePage(),
     );
   }
 }

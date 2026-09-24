@@ -8,7 +8,7 @@ class AppBarMs extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: C3,
-      elevation: 0,
+      elevation: 8,
 
       leading: AppCircleAvatar(),
 
@@ -18,7 +18,7 @@ class AppBarMs extends StatelessWidget implements PreferredSizeWidget {
               text:'Music',
               style: TextStyle(
                 color: C2,
-                fontSize: 40,
+                fontSize: 24,
                 fontWeight: FontWeight.bold
               ),
 
@@ -27,7 +27,7 @@ class AppBarMs extends StatelessWidget implements PreferredSizeWidget {
                 text: ' Store',
                 style: TextStyle(
                     color: C1,
-                    fontSize: 35,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold
                 )
               )
@@ -42,9 +42,10 @@ class AppBarMs extends StatelessWidget implements PreferredSizeWidget {
           icon:  Icon(
                   Icons.notifications,
                   color: C2,
-                  size: 30,
+                  size: 26,
           )
-        )
+        ),
+        SizedBox(width: 8),
       ],
     );
   }

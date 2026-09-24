@@ -12,12 +12,14 @@ class _PanierPageState extends State<PanierPage> {
   int n = 0;
   void salutation() {
     setState(() {
-      nom = nom + n.toString();
-      n++;
-      print('Bonjour $nom');
-    });
-
+              nom = nom + n.toString();
+              n++;
+              print('Bonjour $nom');
+            }
+            );
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

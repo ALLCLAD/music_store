@@ -8,6 +8,7 @@ class BottomAppBarMs extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       color: C3,
+      elevation: 8,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
