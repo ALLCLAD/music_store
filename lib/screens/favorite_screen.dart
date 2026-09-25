@@ -1,16 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../widgets/colors.dart';
+import '../widgets/favoris_card.dart';
+import '../providers/favoris_providers.dart';
 
-class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({super.key});
+
+class FavoritesPage extends ConsumerWidget {
+  const FavoritesPage({super.key});
 
   @override
-  State<FavoriteScreen> createState() => _FavoriteScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final listFavoris = ref.watch(favorisProvider);
 
-class _FavoriteScreenState extends State<FavoriteScreen> {
+    if (listFavoris.isEmpty) {
+      return const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
+            Icon(Icons.favorite_border, size: 90, color: C2),
+
+            SizedBox(height: 16),
+
+            Text(
+              'Aucun instrument dans vos favoris.',
+              style: TextStyle(
+                fontSize: 16,
+                color: C2
+              )
+            ),
+        ]
+      )
+      );
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      itemCount: listFavoris.length,
+      itemBuilder: (context, index) {
+        return FavoriteInstrumentCard(instrument: listFavoris[index]);
+      },
+    );
   }
 }
+

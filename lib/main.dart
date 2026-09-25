@@ -1,12 +1,16 @@
-import 'package:e_instru/screens/auth_screen/login_screen.dart';
-import 'package:e_instru/screens/auth_screen/subscription_screen.dart';
-import 'package:e_instru/screens/panier_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/home_screen.dart';
 import 'widgets/colors.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      const ProviderScope(
+
+          child: MyApp(),
+
+      ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,14 +19,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Music Store',
+
       theme: ThemeData(
 
         colorScheme: .fromSeed(seedColor: C4),
 
       ),
+
       home: const HomePage(),
+
     );
+
   }
 }
 

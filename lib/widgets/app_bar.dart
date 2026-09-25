@@ -1,6 +1,7 @@
-import 'package:e_instru/widgets/app_circle_avatar.dart';
 import 'package:e_instru/widgets/colors.dart';
 import 'package:flutter/material.dart';
+import 'app_logo.dart';
+
 class AppBarMs extends StatelessWidget implements PreferredSizeWidget {
   const AppBarMs({super.key});
 
@@ -9,48 +10,53 @@ class AppBarMs extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: C3,
       elevation: 8,
+      centerTitle: true,
+      leadingWidth: 60,
 
-      leading: AppCircleAvatar(),
-
-      title: Center(
-          child: const Text.rich(
-            TextSpan(
-              text:'Music',
-              style: TextStyle(
-                color: C2,
-                fontSize: 24,
-                fontWeight: FontWeight.bold
-              ),
-
-            children : <TextSpan>[
-              TextSpan(
-                text: ' Store',
-                style: TextStyle(
-                    color: C1,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold
-                )
-              )
-            ],
+      leading: const Padding(
+        padding: EdgeInsets.only(left: 12.0),
+        child: Center(
+          child: AppLogo(
+            size: 40,
           ),
-          )
+        ),
+      ),
+
+      title: const Text.rich(
+        TextSpan(
+          text: 'Shop',
+          style: TextStyle(
+            color: C2,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          children: <TextSpan>[
+            TextSpan(
+              text: ' Verse',
+              style: TextStyle(
+                color: C1,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
 
       actions: <Widget>[
         IconButton(
           onPressed: () {},
-          icon:  Icon(
-                  Icons.notifications,
-                  color: C2,
-                  size: 26,
-          )
+          icon: const Icon(
+            Icons.notifications,
+            color: C2,
+            size: 26,
+          ),
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
       ],
     );
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

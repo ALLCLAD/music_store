@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:e_instru/models/instrument_model.dart';
-import 'package:e_instru/widgets/colors.dart';
+import '../models/instrument_model.dart';
+import '../providers/panier_providers.dart';
+import '../widgets/colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../providers/favoris_providers.dart';
 
 
-class InstrumentCard extends StatefulWidget {
+class InstrumentCard extends ConsumerWidget {
   final Instrument instrument;
 
   const InstrumentCard({
@@ -12,20 +16,8 @@ class InstrumentCard extends StatefulWidget {
   });
 
   @override
-  State<InstrumentCard> createState() => _InstrumentCardState();
-}
-
-class _InstrumentCardState extends State<InstrumentCard> {
-
-  // méthode pour mettre un instrument en favoris
-  void mettreEnFavoris() {
-    setState(() {
-      widget.instrument.estFavoris = !widget.instrument.estFavoris;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final estFavoris = ref.watch(favorisProvider).any((item) => item.id == instrument.id);
     return Card(
 
       elevation: 1.5,
@@ -45,10 +37,17 @@ class _InstrumentCardState extends State<InstrumentCard> {
 
                 // section pour l'image de l'instrument
                 Expanded(
-                  child: Image.asset(
+                  child: Image.network(
                     width: double.infinity,
-                    widget.instrument.imageUrl,
+                    instrument.imageUrl,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => const Center(
+                      child: Icon(
+                        Icons.broken_image,
+                        color: C5,
+                        size: 40,
+                      ),
+                    ),
                   ),
                 ),
 
@@ -62,7 +61,7 @@ class _InstrumentCardState extends State<InstrumentCard> {
                         // section pour le nom de l'instrument
                         Expanded(
                           child: Text(
-                            widget.instrument.nom,
+                            instrument.nom,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: const TextStyle(
@@ -77,10 +76,10 @@ class _InstrumentCardState extends State<InstrumentCard> {
                           constraints: const BoxConstraints(),
                           padding: const EdgeInsets.all(4),
                           onPressed: () {
-                            mettreEnFavoris();
+                            ref.read(favorisProvider.notifier).toggleFavori(instrument);
                           },
                           icon: Icon(
-                            widget.instrument.estFavoris ? Icons.favorite : Icons.favorite_border,
+                            estFavoris ? Icons.favorite : Icons.favorite_border,
                             color: C5,
                             size: 18,
                           ),
@@ -97,44 +96,71 @@ class _InstrumentCardState extends State<InstrumentCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                       children:<Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            color: C1,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
 
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          child: Text(
-                              '${widget.instrument.prix} FcFA',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
+
+
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+
+                          children: <Widget>[
+
+                            Text(
+                              instrument.categorie.toUpperCase(),
                               style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: C3,
-                              )
-                          ),
+                                fontSize: 10,
+                                color: C5,
+                              ),
+                            ),
+
+                            const SizedBox(height: 2),
+
+                            Container(
+                              decoration: BoxDecoration(
+                                color: C1,
+                              borderRadius: BorderRadius.circular(8),
+                              ),
+
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              child: Text(
+                                  '${instrument.prix} \$',
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: C3,
+                                  )
+                              ),
+                            )]
                         ),
 
                         const SizedBox(width: 4),
 
-                        InkWell(
-                          onTap: () {},
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration:
-                            const BoxDecoration(
-                              color: C2,
-                              shape: BoxShape.circle,
-                            ),
-                          child: const Icon(
-                                Icons.add_shopping_cart,
-                                color: C3,
-                                size: 16,
-                              )
-                            ),
+                        IconButton.filled(
+
+                          style: IconButton.styleFrom(
+                            backgroundColor: C2,
+                            padding: const EdgeInsets.all(6),
+                            minimumSize: Size.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
+
+                          onPressed: () {
+                            ref.read(panierProvider.notifier).ajouterArticle(instrument);
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('${instrument.nom} ajouté au panier !'),
+                                duration: const Duration(seconds: 1),
+                              ),
+                            );
+                          },
+
+                          // icone du panier pour commander un instrument
+                          icon: const Icon(Icons.add_shopping_cart, color: C3, size: 16),
+                        ),
+                        
                       ]
                   ),
                 )
