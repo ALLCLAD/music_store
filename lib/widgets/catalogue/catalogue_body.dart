@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/instrument_provider.dart';
-import '../widgets/instrument_card.dart';
-import 'colors.dart';
+import '../../providers/instrument_provider.dart';
+import 'instrument_card.dart';
+import '../colors.dart';
 
 class CatalogBody extends ConsumerWidget {
   const CatalogBody({super.key});

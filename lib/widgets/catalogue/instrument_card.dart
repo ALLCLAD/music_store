@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/instrument_model.dart';
-import '../providers/panier_providers.dart';
-import '../widgets/colors.dart';
+import '../../models/instrument_model.dart';
+import '../../providers/panier_providers.dart';
+import '../../screens/product_detail_screen.dart';
+import '../colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../providers/favoris_providers.dart';
+import '../../providers/favoris_providers.dart';
 
 
 class InstrumentCard extends ConsumerWidget {
@@ -28,7 +28,14 @@ class InstrumentCard extends ConsumerWidget {
 
       child: InkWell(
 
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetailScreen(instrument: instrument),
+              ),
+            );
+          },
 
           child: Column(
 

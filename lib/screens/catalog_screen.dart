@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/colors.dart';
 import '../widgets/search_bar.dart';
-import '../widgets/catalogue_body.dart';
+import '../widgets/catalogue/catalogue_body.dart';
 
 
 class CatalogPage extends StatelessWidget {

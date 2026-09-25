@@ -4,6 +4,7 @@ class Instrument {
   final String imageUrl;
   final double prix;
   final String categorie;
+  final String description;
   bool estFavoris;
 
   Instrument({
@@ -12,6 +13,7 @@ class Instrument {
     required this.imageUrl,
     required this.prix,
     required this.categorie,
+    required this.description,
     this.estFavoris = false,
   });
 
@@ -22,6 +24,7 @@ class Instrument {
       imageUrl: json['thumbnail'] as String,
       prix: (json['price'] as num).toDouble(),
       categorie: json['category'] as String,
+      description: json['description'] as String ?? 'Aucune description disponible',
     );
   }
 }

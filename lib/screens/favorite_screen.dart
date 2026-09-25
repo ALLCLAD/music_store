@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widgets/colors.dart';
-import '../widgets/favoris_card.dart';
+import '../widgets/favoris/favoris_card.dart';
 import '../providers/favoris_providers.dart';
 
 

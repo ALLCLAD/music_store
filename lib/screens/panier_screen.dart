@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widgets/colors.dart';
-import '../widgets/panier_card.dart';
+import '../widgets/panier/panier_card.dart';
 import '../providers/panier_providers.dart';
 
 class PanierPage extends ConsumerWidget {

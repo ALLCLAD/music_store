@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import '../providers/panier_providers.dart';
-import '../widgets/colors.dart';
+import '../../providers/panier_providers.dart';
+import '../colors.dart';
 
 class PanierInstrumentCard extends ConsumerWidget {
   final CartItem item;
