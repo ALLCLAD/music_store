@@ -9,16 +9,38 @@ class CatalogBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncInstruments = ref.watch(instrumentsProvider);
+    final asyncFilteredInstruments = ref.watch(filteredInstrumentsProvider);
 
-    return asyncInstruments.when(
-      // 1. Succès : Affichage de la grille
+    return asyncFilteredInstruments.when(
+      // 1. Succès : Affichage des résultats filtrés
       data: (mesInstruments) {
         if (mesInstruments.isEmpty) {
           return const Center(
-            child: Text('Aucun produit disponible.'),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                    Icons.search_off_rounded,
+                    size: 50,
+                    color: C2
+                ),
+
+                SizedBox(height: 10),
+                Text(
+                  'Aucun produit ne correspond à votre recherche.',
+
+                  style: TextStyle(
+                      color: C2,
+                      fontSize: 15
+                  ),
+
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           );
         }
+
         return GridView.builder(
           itemCount: mesInstruments.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
