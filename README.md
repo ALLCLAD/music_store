@@ -15,15 +15,20 @@
 
 ### Logo & Écran de Démarrage
 
-![Logo ShopVerse](assets/images/shopVerse.png)
-![Splash Screen](assets/images/splash_screen.png)
+<p align="center">
+  <img src="assets/images/shopVerse.png" alt="Logo ShopVerse" width="160" />
+  <br>
+  <img src="assets/images/splash_screen.png" alt="Splash Screen" width="220" />
+</p>
 
 ### Parcours Utilisateur & Écrans Principaux
 
-![Catalogue](assets/images/catalogue_page.png)
-![Détails Produit](assets/images/product_détails_page.png)
-![Liste des Favoris](assets/images/favorites_list_page.png)
-![Panier d'Achat](assets/images/cart_page.png)
+<p align="center">
+  <img src="assets/images/catalogue_page.png" alt="Catalogue" width="200" />
+  <img src="assets/images/product_détails_page.png" alt="Détails Produit" width="200" />
+  <img src="assets/images/favorites_list_page.png" alt="Liste des Favoris" width="200" />
+  <img src="assets/images/cart_page.png" alt="Panier d'Achat" width="200" />
+</p>
 
 ---
 
