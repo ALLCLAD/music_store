@@ -1,48 +1,62 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../models/cart_item_model.dart';
 import '../models/instrument_model.dart';
+import '../services/panier_db_service.dart';
 
-class CartItem {
-  final Instrument instrument;
-  int quantite;
+// Service DB injecté via Riverpod
+final panierDbServiceProvider = Provider<PanierDbService>((ref) {
+  return PanierDbService();
+});
 
-  CartItem({required this.instrument, this.quantite = 1});
-}
+// Provider AsyncNotifier
+final panierProvider = AsyncNotifierProvider<PanierNotifier, List<CartItem>>(
+  PanierNotifier.new,
+);
 
-final panierProvider = NotifierProvider<PanierNotifier, List<CartItem>>(PanierNotifier.new);
+class PanierNotifier extends AsyncNotifier<List<CartItem>> {
+  late final PanierDbService _dbService;
 
-class PanierNotifier extends Notifier<List<CartItem>> {
   @override
-  List<CartItem> build() => [];
-
-  void ajouterArticle(Instrument instrument) {
-    final index = state.indexWhere((item) => item.instrument.id == instrument.id);
-    if (index != -1) {
-      final nouvelleListe = [...state];
-      nouvelleListe[index].quantite++;
-      state = nouvelleListe;
-    } else {
-      state = [...state, CartItem(instrument: instrument)];
-    }
+  Future<List<CartItem>> build() async {
+    _dbService = ref.watch(panierDbServiceProvider);
+    return await _dbService.getPanier();
   }
 
-  void diminuerQuantite(Instrument instrument) {
-    final index = state.indexWhere((item) => item.instrument.id == instrument.id);
-    if (index == -1) return;
-
-    if (state[index].quantite > 1) {
-      final nouvelleListe = [...state];
-      nouvelleListe[index].quantite--;
-      state = nouvelleListe;
-    } else {
-      retirerDuPanier(instrument);
-    }
+  Future<void> ajouterArticle(Instrument instrument) async {
+    await _dbService.ajouterOuIncrementer(instrument);
+    // Recharge la liste mise à jour depuis la BDD sans afficher de loader gênant
+    state = AsyncValue.data(await _dbService.getPanier());
   }
 
-  void retirerDuPanier(Instrument instrument) {
-    state = state.where((item) => item.instrument.id != instrument.id).toList();
+  Future<void> diminuerQuantite(Instrument instrument) async {
+    await _dbService.decrementerOuRetirer(instrument.id);
+    state = AsyncValue.data(await _dbService.getPanier());
   }
 
-  double get totalPrix {
-    return state.fold(0.0, (sum, item) => sum + (item.instrument.prix * item.quantite));
+  Future<void> retirerDuPanier(Instrument instrument) async {
+    await _dbService.supprimerDuPanier(instrument.id);
+    state = AsyncValue.data(await _dbService.getPanier());
   }
 }
+
+// Providers utilitaires (calculs dérivés du panier)
+final totalPanierProvider = Provider<double>((ref) {
+  final asyncPanier = ref.watch(panierProvider);
+  return asyncPanier.when(
+    data: (cart) => cart.fold(
+      0.0,
+          (sum, item) => sum + (item.instrument.prix * item.quantite),
+    ),
+    loading: () => 0.0,
+    error: (_, __) => 0.0,
+  );
+});
+
+final nombreArticlesPanierProvider = Provider<int>((ref) {
+  final asyncPanier = ref.watch(panierProvider);
+  return asyncPanier.when(
+    data: (cart) => cart.fold(0, (sum, item) => sum + item.quantite),
+    loading: () => 0,
+    error: (_, __) => 0,
+  );
+});

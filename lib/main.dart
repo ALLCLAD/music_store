@@ -4,6 +4,9 @@ import 'screens/home_screen.dart';
 import 'widgets/colors.dart';
 
 void main() {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
       const ProviderScope(
 

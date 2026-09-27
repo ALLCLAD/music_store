@@ -1,22 +1,39 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/instrument_model.dart';
+import '../services/favoris_db_service.dart';
 
-final favorisProvider = NotifierProvider<FavorisNotifier, List<Instrument>>(FavorisNotifier.new);
+final favorisDbServiceProvider = Provider<FavorisDbService>((ref) {
+  return FavorisDbService();
+});
 
-class FavorisNotifier extends Notifier<List<Instrument>> {
+final favorisProvider = AsyncNotifierProvider<FavorisNotifier, List<Instrument>>(
+  FavorisNotifier.new,
+);
+
+class FavorisNotifier extends AsyncNotifier<List<Instrument>> {
+  late final FavorisDbService _dbService;
+
   @override
-  List<Instrument> build() => [];
-
-  void toggleFavori(Instrument instrument) {
-    final existe = state.any((item) => item.id == instrument.id);
-    if (existe) {
-      state = state.where((item) => item.id != instrument.id).toList();
-    } else {
-      state = [...state, instrument];
-    }
+  Future<List<Instrument>> build() async {
+    _dbService = ref.watch(favorisDbServiceProvider);
+    return await _dbService.getFavoris();
   }
 
-  void retirerFavori(Instrument instrument) {
-    state = state.where((item) => item.id != instrument.id).toList();
+  Future<void> toggleFavori(Instrument instrument) async {
+    final actuels = state.value ?? [];
+    final estFavori = actuels.any((item) => item.id == instrument.id);
+
+    if (estFavori) {
+      await _dbService.deleteFavori(instrument.id);
+    } else {
+      await _dbService.insertFavori(instrument);
+    }
+
+    state = AsyncValue.data(await _dbService.getFavoris());
+  }
+
+  Future<void> retirerFavori(Instrument instrument) async {
+    await _dbService.deleteFavori(instrument.id);
+    state = AsyncValue.data(await _dbService.getFavoris());
   }
 }

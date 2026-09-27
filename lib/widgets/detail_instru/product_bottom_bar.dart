@@ -4,6 +4,7 @@ import '../../models/instrument_model.dart';
 import '../../providers/favoris_providers.dart';
 import '../../providers/panier_providers.dart';
 import '../colors.dart';
+import '../custom_snackbar.dart'; // Import de la SnackBar réutilisable
 
 class ProductBottomBar extends ConsumerWidget {
   final Instrument instrument;
@@ -15,9 +16,8 @@ class ProductBottomBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final estFavoris = ref
-        .watch(favorisProvider)
-        .any((item) => item.id == instrument.id);
+    final asyncFavoris = ref.watch(favorisProvider);
+    final estFavoris = asyncFavoris.value?.any((item) => item.id == instrument.id) ?? false;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -37,8 +37,19 @@ class ProductBottomBar extends ConsumerWidget {
           children: [
             // Bouton Favori
             InkWell(
-              onTap: () {
-                ref.read(favorisProvider.notifier).toggleFavori(instrument);
+              onTap: () async {
+                final precedent = estFavoris;
+                await ref.read(favorisProvider.notifier).toggleFavori(instrument);
+
+                if (context.mounted) {
+                  showCustomSnackBar(
+                    context,
+                    message: precedent
+                        ? '${instrument.nom} retiré des favoris'
+                        : '${instrument.nom} ajouté aux favoris !',
+                    icon: precedent ? Icons.favorite_border : Icons.favorite,
+                  );
+                }
               },
               borderRadius: BorderRadius.circular(14),
               child: Container(
@@ -76,12 +87,11 @@ class ProductBottomBar extends ConsumerWidget {
                   ),
                   onPressed: () {
                     ref.read(panierProvider.notifier).ajouterArticle(instrument);
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('${instrument.nom} ajouté au panier !'),
-                        duration: const Duration(seconds: 1),
-                      ),
+
+                    showCustomSnackBar(
+                      context,
+                      message: '${instrument.nom} ajouté au panier !',
+                      icon: Icons.check_circle_outline,
                     );
                   },
                   icon: const Icon(Icons.add_shopping_cart_rounded, color: C3, size: 20),

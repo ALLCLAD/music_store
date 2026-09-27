@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/instrument_provider.dart';
 import 'instrument_card.dart';
 import '../colors.dart';
+import '../../widgets/catalogue/catalog_skeleton.dart';
 
 class CatalogBody extends ConsumerWidget {
   const CatalogBody({super.key});
@@ -56,9 +57,7 @@ class CatalogBody extends ConsumerWidget {
       },
 
       // 2. Chargement
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
+      loading: () => const CatalogSkeleton(),
 
       // 3. Erreur
       error: (error, stackTrace) => Center(
